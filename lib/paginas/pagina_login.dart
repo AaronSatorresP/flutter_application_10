@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_10/components/boto_auth.dart';
 import 'package:flutter_application_10/components/textfieid_auth.dart';
 
 class PaginaLogin extends StatefulWidget {
@@ -28,6 +29,9 @@ class _PaginaLoginState extends State<PaginaLogin> {
               size: 120,
               color: Color.fromARGB(255, 255, 240, 218),
             ),
+
+            const SizedBox(height: 25,),
+
             // Frase
             const Text(
               "Benvingut/da de nou",
@@ -38,33 +42,39 @@ class _PaginaLoginState extends State<PaginaLogin> {
               ),
             ),
 
-            // Text divisori.
-            const Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    thickness: 1,
-                    color: Color.fromARGB(255, 255, 240, 218),
-                   ),
-                ),
+            const SizedBox(height: 25,),
 
-                 Padding(
-                   padding: EdgeInsets.symmetric(horizontal: 4,),
-                   child: Text(
-                    "Fes login",
-                    style: TextStyle(color: Color.fromARGB(255, 255, 240, 218),),
+            // Text divisori.
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25,),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      thickness: 1,
+                      color: Color.fromARGB(255, 255, 240, 218),
+                     ),
+                  ),
+              
+                   Padding(
+                     padding: EdgeInsets.symmetric(horizontal: 4,),
+                     child: Text(
+                      "Fes login",
+                      style: TextStyle(color: Color.fromARGB(255, 255, 240, 218),),
+                     ),
                    ),
-                 ),
-                 
-                 Expanded(
-                   child: Divider(
-                    thickness: 1,
-                    color: Color.fromARGB(255, 255, 240, 218),
+                   
+                   Expanded(
+                     child: Divider(
+                      thickness: 1,
+                      color: Color.fromARGB(255, 255, 240, 218),
+                     ),
                    ),
-                 ),
-              ],
+                ],
+              ),
             ),
 
+            const SizedBox(height: 10,),
 
             // TextField Email.
 
@@ -74,15 +84,44 @@ class _PaginaLoginState extends State<PaginaLogin> {
               obscureText: false,
               ),
 
+
+              const SizedBox(height: 10,),
+
             // TextField Password.
             TextFieldAuth(
               controller: controllerPassword, 
               hintText: "Password", 
               obscureText: true,
               ),
+
+              const SizedBox(height: 10,),
+
+
             // No estas registrat/da?
-        
+               Padding(
+                padding: const EdgeInsets.symmetric( horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text("No ets menbre?"),
+                    const SizedBox(width: 4,),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        "Registra't",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10,),
             // Botó login
+
+            const BotoAuth(),
         
           ],
         ),
