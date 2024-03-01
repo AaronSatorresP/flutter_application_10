@@ -3,7 +3,12 @@ import 'package:flutter_application_10/components/boto_auth.dart';
 import 'package:flutter_application_10/components/textfieid_auth.dart';
 
 class PAginaRegistre extends StatefulWidget {
-  const PAginaRegistre({super.key});
+
+  final void Function() alFerClic;
+  const PAginaRegistre({
+    super.key,
+    required this.alFerClic,
+    });
 
   @override
   State<PAginaRegistre> createState() => _PAginaRegistreState();
@@ -112,7 +117,7 @@ class _PAginaRegistreState extends State<PAginaRegistre> {
                           const Text("Ya ets menbre?"),
                           const SizedBox(width: 4,),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: widget.alFerClic,
                             child: const Text(
                               "Fes login",
                               style: TextStyle(
