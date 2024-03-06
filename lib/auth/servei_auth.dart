@@ -24,4 +24,8 @@ class ServeiAuth{
 
 
  // Fer logout 
+
+  Future<void> tancaSessio()async{
+    return await _auth.signOut();
+  }
 }

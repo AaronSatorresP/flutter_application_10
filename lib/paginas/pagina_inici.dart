@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_10/auth/servei_auth.dart';
 
 class PaginaInici extends StatelessWidget {
   const PaginaInici({super.key});
 
   void logout(){
 
+    final serveiAuth = ServeiAuth();
+
+    serveiAuth.tancaSessio(); 
   }
   
   @override
