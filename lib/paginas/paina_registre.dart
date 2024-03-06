@@ -15,7 +15,7 @@ class PAginaRegistre extends StatefulWidget {
 }
 
 class _PAginaRegistreState extends State<PAginaRegistre> {
-   final TextEditingController controllerEmail = TextEditingController();
+  final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
   final TextEditingController controllerConfirmaPassword = TextEditingController();
   void ferRegistre(){
