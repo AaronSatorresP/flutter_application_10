@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_10/auth/servei_auth.dart';
 import 'package:flutter_application_10/components/boto_auth.dart';
 import 'package:flutter_application_10/components/textfieid_auth.dart';
 
@@ -18,8 +21,23 @@ class _PAginaRegistreState extends State<PAginaRegistre> {
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
   final TextEditingController controllerConfirmaPassword = TextEditingController();
-  void ferRegistre(){
-    
+  void ferRegistre(BuildContext context) async{
+    print(controllerPassword.text);
+    final serveiAuth = ServeiAuth();
+    try{
+      serveiAuth.registreambemailpassword(
+        controllerEmail.text, 
+        controllerPassword.text,
+        );
+    }catch(e){
+      showDialog(
+        context: context,
+       builder: (context) =>  AlertDialog(
+        title: const Text("Error"),
+        content: Text(e.toString()),
+       ),
+       );
+    }
   }
 
   @override
@@ -134,7 +152,7 @@ class _PAginaRegistreState extends State<PAginaRegistre> {
             
                   BotoAuth(
                     text: "Registre",
-                    onTap: ferRegistre,
+                    onTap:() => ferRegistre(context),
                   ),
               
                 ],
