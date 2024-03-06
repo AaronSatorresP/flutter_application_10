@@ -28,6 +28,10 @@ class ServeiAuth{
       email: email, 
       password: password,
       );
+
+      
+
+
       return credencialUsuari;
     } on FirebaseAuthException catch(e){
       throw Exception(e.code);
