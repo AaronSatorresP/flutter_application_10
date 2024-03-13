@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ServeiAuth{
 
  final FirebaseAuth _auth = FirebaseAuth.instance;
+ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
  // Fer login
   Future<UserCredential> loginAmbEmailPassword(String Email, Password) async{
@@ -22,7 +24,7 @@ class ServeiAuth{
 
  // Fer Registre
   Future<UserCredential> registreambemailpassword(String email, password) async{
-    print(password);
+    
     try{
       UserCredential credencialUsuari = await _auth.createUserWithEmailAndPassword(
       email: email, 
@@ -30,7 +32,12 @@ class ServeiAuth{
       );
 
       
-
+      _firestore.collection("Usuaris").doc(credencialUsuari.user!.uid).set(
+        {
+          "uid": credencialUsuari.user!.uid,
+          "email" : email,
+        }
+      );
 
       return credencialUsuari;
     } on FirebaseAuthException catch(e){
