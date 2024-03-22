@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_10/chat/servei_chat.dart';
 
 class PaginaChat extends StatefulWidget {
 
   final String emailParlem;
+  final String idReceptor;
   const PaginaChat({
     super.key,
     required this.emailParlem,
+    required this.idReceptor,
     });
 
   @override
@@ -18,12 +21,18 @@ class PaginaChat extends StatefulWidget {
 class _PaginaChatState extends State<PaginaChat> {
 
   final TextEditingController controllerMissatge = TextEditingController();
+
+  final ServeiChat _serveiChat = ServeiChat();
+
   void enviarMissatge(){
 
     if(controllerMissatge.text.isNotEmpty){
 
       // Enviar el missatge.
-      
+      _serveiChat.enviarMissatge(
+         widget.idReceptor,
+         controllerMissatge.text,
+         );
       // Netejar el camp.
       controllerMissatge.clear();
     }
