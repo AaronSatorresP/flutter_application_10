@@ -26,24 +26,71 @@ class PaginaChat extends StatefulWidget {
 class _PaginaChatState extends State<PaginaChat> {
 
   final TextEditingController controllerMissatge = TextEditingController();
+  final ScrollController controllerScroll = ScrollController();
 
   final ServeiChat _serveiChat = ServeiChat();
 
   final ServeiAuth _serviAuth = ServeiAuth();
 
-  void enviarMissatge(){
+  //Variable para el tecldo de un mobil
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  void dispose() {
+
+    focusNode.dispose();
+
+    super.dispose();
+  }
+@override
+  void initState() {
+    super.initState();
+
+    focusNode.addListener(() { 
+      Future.delayed(
+      const Duration(milliseconds: 500),
+      () => ferScrollCapAvail(),
+    );
+    });
+
+
+    // Ens esperem un moment i llavors movem cap a baix
+    Future.delayed(
+      const Duration(milliseconds: 500),
+      () => ferScrollCapAvail(),
+    );
+
+  }
+
+  void ferScrollCapAvail(){
+    controllerScroll.animateTo(
+      controllerScroll.position.maxScrollExtent,
+       duration: const Duration(seconds: 1), 
+       curve: Curves.fastOutSlowIn
+    );
+  }
+
+  void enviarMissatge() async{
 
     if(controllerMissatge.text.isNotEmpty){
 
       // Enviar el missatge.
-      _serveiChat.enviarMissatge(
+      await _serveiChat.enviarMissatge(
          widget.idReceptor,
          controllerMissatge.text,
          );
       // Netejar el camp.
       controllerMissatge.clear();
+
+
+      ferScrollCapAvail();
     }
   }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +131,7 @@ class _PaginaChatState extends State<PaginaChat> {
         }
         // Retornar dades(ListView).
         return ListView(
+          controller: controllerScroll,
           children: snapshot.data!.docs.map((document) => _construirItemMissatge(document)).toList(),
         );
       }
