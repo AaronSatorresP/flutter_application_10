@@ -63,4 +63,31 @@ imagenes:
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
 
+  5) Perque funcioni en IOS:
+  - Anar a ios > Runner > Info.plist
+  -Afegir els permisos amb les següents lineas:
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Privacy - Photo Library Usage Description</string>
+    <key>NSMotionUsageDescription</key>
+    <string>Motion usage description</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>NSPhotoLibraryAddUsageDescription</string>
+
+
+ 6) Perque funcioni en WEB:
+    - Anar a web > index.html
+    - On diu "onEntrypointLoaded":
+       onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+    - Canviar-ho per:
+       onEntrypointLoaded: function(engineInitializer) {
+          let config ={ renderer: 'html' };
+          engineInitializer.initializeEngine(config).then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+
 */
