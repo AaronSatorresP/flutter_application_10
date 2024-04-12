@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_10/auth/servei_auth.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditarDadesUsuari extends StatefulWidget {
@@ -48,8 +50,64 @@ class _EditarDadesUsuariState extends State<EditarDadesUsuari> {
         });
       }
     }
+
+
   }
 
+  Future<bool> pujarImatgePerUsuari() async{
+
+    String idUsuari = ServeiAuth().getUsuariActual()!.uid;
+
+    Reference ref = FirebaseStorage.instance.ref().child("$idUsuari/avatar/$idUsuari");
+
+    // Agafem la imatge de la variable que tingui (la de Web o la de App).
+
+    if(_imatgeSeleccionadaApp != null){
+
+      try {
+      await ref.putFile(_imatgeSeleccionadaApp!);
+      return true;
+      } catch (e) {return false;}
+      
+    }
+    if(_imatgeSeleccionadaWeb != null){
+      try {
+      await ref.putData(_imatgeSeleccionadaWeb!);
+      return true;
+      } catch (e) {return false;}
+    }
+    return false;
+  }
+    Future<String> getImatgePerfil() async {
+
+      final String idUsuari = ServeiAuth().getUsuariActual()!.uid;
+      final Reference ref = FirebaseStorage.instance.ref().child("$idUsuari/avatar/$idUsuari");
+
+      final String urlimatge = await ref.getDownloadURL();
+
+      return urlimatge;
+    }
+
+  Widget mostraImatge() {
+
+    return FutureBuilder(
+      future: getImatgePerfil(), 
+      builder: (context, snapshot) {
+
+        if (snapshot.connectionState == ConnectionState.waiting || snapshot.hasError) {
+
+          return const Icon(Icons.person);
+        }
+           
+        return Image.network(
+        snapshot.data!,
+        errorBuilder: (context,error , stackTrace){
+          return Text("Error al carregar la imatge: $error");
+        },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +138,20 @@ class _EditarDadesUsuariState extends State<EditarDadesUsuari> {
               // ====================================================
               
                 GestureDetector(
-                onTap: () {},
+                onTap: () async {
+
+                  if (_imatgeAPuntPerPujar){
+
+                    bool imatgePujadaCorrectament = await pujarImatgePerUsuari();
+
+                    if(imatgePujadaCorrectament){
+                      setState(() {
+                        mostraImatge();
+                      });
+                      
+                    }
+                  }
+                },
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -103,6 +174,10 @@ class _EditarDadesUsuariState extends State<EditarDadesUsuari> {
 
               // Visor del resultat de carreagr la imatge de Firebase Storage.
               // =============================================================
+
+              Container(
+                child: mostraImatge(),
+              ),
             ],
           ),
           ),
