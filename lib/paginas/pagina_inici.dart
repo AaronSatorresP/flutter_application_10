@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_10/auth/servei_auth.dart';
 import 'package:flutter_application_10/chat/servei_chat.dart';
 import 'package:flutter_application_10/components/item_usuari.dart';
+import 'package:flutter_application_10/paginas/editar_dades_usuari.dart';
 import 'package:flutter_application_10/paginas/paginachat.dart';
 
 class PaginaInici extends StatelessWidget {
@@ -25,6 +26,16 @@ class PaginaInici extends StatelessWidget {
       appBar: AppBar(
         title: const Text( "Pagina inici"),
         actions: [
+          IconButton(
+            onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(
+                builder: (context) => const EditarDadesUsuari()
+                ),
+              );
+            },
+             icon: const Icon(Icons.person)
+             ),
           IconButton(
             onPressed: logout, 
           icon: const Icon(Icons.logout),

@@ -66,7 +66,7 @@ class _EditarDadesUsuariState extends State<EditarDadesUsuari> {
               // Botó per obrir el FilePicker.
               // ============================
               GestureDetector(
-                onTap: _triaImatge(),
+                onTap: _triaImatge,
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -92,6 +92,14 @@ class _EditarDadesUsuariState extends State<EditarDadesUsuari> {
 
               // Visor del resultat del FilePicker.
               // ==================================
+
+              Container(
+                child: _imatgeSeleccionadaWeb == null && _imatgeSeleccionadaApp == null ? 
+                Container() : 
+                kIsWeb ? 
+                Image.memory(_imatgeSeleccionadaWeb!, fit: BoxFit.fill,) : 
+                Image.file(_imatgeSeleccionadaApp!,fit: BoxFit.fill,),
+              ),
 
               // Visor del resultat de carreagr la imatge de Firebase Storage.
               // =============================================================
