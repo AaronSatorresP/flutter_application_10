@@ -32,6 +32,8 @@ class _PaginaChatState extends State<PaginaChat> {
 
   final ServeiAuth _serviAuth = ServeiAuth();
 
+
+
   //Variable para el tecldo de un mobil
   final FocusNode focusNode = FocusNode();
 
@@ -143,21 +145,45 @@ class _PaginaChatState extends State<PaginaChat> {
     //final data = document...(altra opcio).
     Map<String,dynamic> data = documentSnapshot.data() as Map<String ,dynamic>;
 
+    // creacio del message tiempo
+    String messageTime = _serveiChat.formatTime(data["timestamp"]);
+
     // Saber si el  mostrem a l'esquerra o a la dreta.
 
     // Si es usuari actual.
     bool esUsuariActual = data["idAutor"] == _serviAuth.getUsuariActual()!.uid;
 
+
     // Operador ternari
     var aliniament = esUsuariActual ? Alignment.centerRight : Alignment.centerLeft;
     var colorBombolla = esUsuariActual ? Colors.green[200] : Colors.amber[200];
-    return Container(
-      alignment: aliniament,
-      child: BombollaMissatge(colorBombolla: colorBombolla??Colors.black,
-      missatge: data["missatge"],
+    return Column(
+    crossAxisAlignment: 
+    esUsuariActual ? CrossAxisAlignment.end:CrossAxisAlignment.start,
+    children: [
+      
+      // Mostrar la bombolla del mensaje
+      Container(
+        alignment: aliniament,
+        child: BombollaMissatge(
+          colorBombolla: colorBombolla ?? Colors.black,
+          missatge: data["missatge"],
+        ),
       ),
-    );
-  }
+      Padding(
+      padding: EdgeInsets.symmetric(horizontal: esUsuariActual ? 8 : 0),
+      // Mostrar el tiempo del mensaje
+      child: Text(
+        messageTime,
+        style: TextStyle(
+          fontSize: 12,
+          color: esUsuariActual ? Colors.green : Colors.red, 
+        ),
+      ),
+    ),
+    ],
+  );
+}
 
   Widget _construirZonaInputUsuari(){
     return  Padding(

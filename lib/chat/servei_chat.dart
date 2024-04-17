@@ -45,7 +45,7 @@ class ServeiChat{
 
     await _firestore.collection("SalesChat").doc(idSalaChat).collection("Missatges").add(nouMissatge.retornaMapaMissatge());
   }
-
+  
   Stream<QuerySnapshot> getMissatges(String idUsuariActual,idReceptor){
 
     //Volem trobar la SalaChat formada per l'ID dels dos usuaris.
@@ -58,5 +58,18 @@ class ServeiChat{
 
     return _firestore.collection("SalesChat").doc(idSalaChat).collection("Missatges").orderBy("timestamp",descending: false).snapshots();
 
+  }
+  // Creacio de l'hora del missatge
+  String formatTime(Timestamp timestamp){
+    DateTime dataTime = timestamp.toDate();
+    DateTime now = DateTime.now();
+    Duration difference = now.difference(dataTime);
+      if(difference.inHours < 24){
+        return '${dataTime.hour}:${dataTime.minute}';
+
+      }else {
+        int dias = difference.inDays;
+        return 'Enviat fa $dias dias';
+      }
   }
 }
