@@ -25,7 +25,7 @@ class _PAginaRegistreState extends State<PAginaRegistre> {
     print(controllerPassword.text);
     final serveiAuth = ServeiAuth();
     try{
-      serveiAuth.registreambemailpassword(
+      serveiAuth.registreAmbEmailIPassword(
         controllerEmail.text, 
         controllerPassword.text,
         );

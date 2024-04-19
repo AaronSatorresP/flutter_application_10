@@ -17,7 +17,7 @@ class PaginaInici extends StatelessWidget {
 
     //final serveiAuth = ServeiAuth();
 
-    _serveiAuth.tancaSessio(); 
+    _serveiAuth.tancarSessio(); 
   }
   
   @override

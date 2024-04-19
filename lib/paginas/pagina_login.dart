@@ -28,7 +28,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
 
     try{
 
-      await serveiAuth.loginAmbEmailPassword(
+      await serveiAuth.loginAmbEmailIPassword(
         controllerEmail.text,
         controllerPassword.text,
       );
