@@ -14,10 +14,17 @@ class ServeiAuth {
         email: email, 
         password: password,
       );
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('Usuaris').doc(credencialUsuari.user!.uid).get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+      if(data != null){
+        var nombreU = data['nombreUsuario'];
+      }
 
       _firestore.collection("Usuaris").doc(credencialUsuari.user!.uid).set({
         "uid": credencialUsuari.user!.uid,
         "email": email,
+        "nombreUsuario" : data!['nombreUsuario'] ?? "",
       });
 
       return credencialUsuari;
@@ -55,6 +62,7 @@ class ServeiAuth {
       _firestore.collection("Usuaris").doc(credencialUsuari.user!.uid).set({
         "uid": credencialUsuari.user!.uid,
         "email": email,
+        "nombreUsuario": ""
       });
 
       return credencialUsuari;

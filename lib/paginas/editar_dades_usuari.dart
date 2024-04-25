@@ -34,7 +34,7 @@ class _MyWidgetState extends State<EditarDadesUsuari> {
       if (snapshot.exists) {
         Map<String, dynamic> userData = snapshot.data()!;
         setState(() {
-          _nomController.text = userData['nombre'] ?? '';
+          _nomController.text = userData['nombreUsuario'] ?? '';
           _gmailController.text = userData['email'] ?? '';
         });
       }
